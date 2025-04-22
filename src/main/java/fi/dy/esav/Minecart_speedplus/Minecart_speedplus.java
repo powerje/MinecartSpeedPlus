@@ -11,6 +11,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.logging.Logger;
 
 public class Minecart_speedplus extends JavaPlugin {
+    static final double SPEED_LIMIT = 30.0D;
+
     static double speedMultiplier = 1.25D;
     private final Minecart_speedplusVehicleListener VehicleListener = new Minecart_speedplusVehicleListener(this);
     private final Minecart_speedplusSignListener SignListener = new Minecart_speedplusSignListener(this);
@@ -21,7 +23,7 @@ public class Minecart_speedplus extends JavaPlugin {
     }
 
     public boolean setSpeedMultiplier(final double multiplier) {
-        if ((((0.0D < multiplier) ? 1 : 0) & ((multiplier <= 4.0D) ? 1 : 0)) != 0) {
+        if ((((0.0D < multiplier) ? 1 : 0) & ((multiplier <= SPEED_LIMIT) ? 1 : 0)) != 0) {
             speedMultiplier = multiplier;
             return true;
         }
@@ -53,7 +55,7 @@ public class Minecart_speedplus extends JavaPlugin {
         try {
             multiplier = Double.parseDouble(args[0]);
         } catch (final Exception e) {
-            sender.sendMessage(ChatColor.RED + "speed must be between 0.0 and 4.0");
+            sender.sendMessage(ChatColor.RED + "speed must be between 0.0 and " + SPEED_LIMIT);
             return false;
         }
 
@@ -62,7 +64,7 @@ public class Minecart_speedplus extends JavaPlugin {
             sender.sendMessage(ChatColor.YELLOW + "multiplier for new mine carts set to: " + multiplier);
             return true;
         }
-        sender.sendMessage(ChatColor.YELLOW + "speed must be between 0.0 and 4.0");
+        sender.sendMessage(ChatColor.YELLOW + "speed must be between 0.0 and " + SPEED_LIMIT);
         return true;
     }
 }
