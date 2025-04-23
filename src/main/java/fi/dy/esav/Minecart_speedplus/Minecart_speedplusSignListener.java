@@ -38,7 +38,7 @@ public class Minecart_speedplusSignListener implements Listener {
             error = true;
         }
 
-        if (error || 50 < speed || speed < 0) {
+        if (error || Minecart_speedplus.SPEED_LIMIT < speed || speed < 0) {
             e.line(1, Component.text("WRONG VALUE"));
         }
 

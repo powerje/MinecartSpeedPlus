@@ -97,7 +97,7 @@ public class Minecart_speedplusVehicleListener implements Listener {
                         continue;
                     }
 
-                    if (0 < speed && speed <= 50) {
+                    if (0 < speed && speed < Minecart_speedplus.SPEED_LIMIT) {
                         cart.setMaxSpeed(0.4D * speed);
                     } else {
                         side.line(2, Component.text("  ERROR"));

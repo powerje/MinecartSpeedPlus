@@ -12,7 +12,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.logging.Logger;
 
 public class Minecart_speedplus extends JavaPlugin {
-    static final double SPEED_LIMIT = 30.0D;
+    static final double SPEED_MULTIPLIER_MAX = 30.0D;
+    static final double SPEED_LIMIT = 350;
 
     static double speedMultiplier = 1.25D;
     private final Minecart_speedplusVehicleListener VehicleListener = new Minecart_speedplusVehicleListener(this);
@@ -24,7 +25,7 @@ public class Minecart_speedplus extends JavaPlugin {
     }
 
     public boolean setSpeedMultiplier(final double multiplier) {
-        if ((((0.0D < multiplier) ? 1 : 0) & ((multiplier <= SPEED_LIMIT) ? 1 : 0)) != 0) {
+        if ((((0.0D < multiplier) ? 1 : 0) & ((multiplier <= SPEED_MULTIPLIER_MAX) ? 1 : 0)) != 0) {
             speedMultiplier = multiplier;
             return true;
         }
@@ -56,7 +57,7 @@ public class Minecart_speedplus extends JavaPlugin {
         try {
             multiplier = Double.parseDouble(args[0]);
         } catch (final Exception e) {
-            sender.sendMessage(Component.text("speed must be between 0.0 and " + SPEED_LIMIT).color(NamedTextColor.RED));
+            sender.sendMessage(Component.text("speed multiplier must be between 0.0 and " + SPEED_MULTIPLIER_MAX).color(NamedTextColor.RED));
             return false;
         }
 
@@ -65,7 +66,7 @@ public class Minecart_speedplus extends JavaPlugin {
             sender.sendMessage(Component.text("multiplier for new mine carts set to: " + multiplier).color(NamedTextColor.YELLOW));
             return true;
         }
-        sender.sendMessage(Component.text("speed must be between 0.0 and " + SPEED_LIMIT).color(NamedTextColor.YELLOW));
+        sender.sendMessage(Component.text("speed multiplier must be between 0.0 and " + SPEED_MULTIPLIER_MAX).color(NamedTextColor.YELLOW));
         return true;
     }
 }
