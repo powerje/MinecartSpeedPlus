@@ -1,6 +1,7 @@
 package fi.dy.esav.Minecart_speedplus;
 
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -47,7 +48,7 @@ public class Minecart_speedplus extends JavaPlugin {
         }
 
         if ((sender instanceof final Player player) && !player.hasPermission("msp.cmd")) {
-            player.sendMessage("You don't have permission to do that");
+            sender.sendMessage("You don't have permission to do that");
             return true;
         }
 
@@ -55,16 +56,16 @@ public class Minecart_speedplus extends JavaPlugin {
         try {
             multiplier = Double.parseDouble(args[0]);
         } catch (final Exception e) {
-            sender.sendMessage(ChatColor.RED + "speed must be between 0.0 and " + SPEED_LIMIT);
+            sender.sendMessage(Component.text("speed must be between 0.0 and " + SPEED_LIMIT).color(NamedTextColor.RED));
             return false;
         }
 
         var success = setSpeedMultiplier(multiplier);
         if (success) {
-            sender.sendMessage(ChatColor.YELLOW + "multiplier for new mine carts set to: " + multiplier);
+            sender.sendMessage(Component.text("multiplier for new mine carts set to: " + multiplier).color(NamedTextColor.YELLOW));
             return true;
         }
-        sender.sendMessage(ChatColor.YELLOW + "speed must be between 0.0 and " + SPEED_LIMIT);
+        sender.sendMessage(Component.text("speed must be between 0.0 and " + SPEED_LIMIT).color(NamedTextColor.YELLOW));
         return true;
     }
 }

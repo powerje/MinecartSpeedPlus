@@ -17,8 +17,9 @@ import java.util.Set;
 
 public class Minecart_speedplusVehicleListener implements Listener {
     public static Minecart_speedplus plugin;
-    @SuppressWarnings("UnstableApiUsage")
+
     private final Set<Material> signs = EnumSet.of(Material.OAK_SIGN, Material.SPRUCE_SIGN, Material.BIRCH_SIGN, Material.JUNGLE_SIGN, Material.ACACIA_SIGN, Material.DARK_OAK_SIGN, Material.MANGROVE_SIGN, Material.BAMBOO_SIGN, Material.CRIMSON_SIGN, Material.WARPED_SIGN);
+
     final int[] xmodifier = {-1, 0, 1};
     final int[] ymodifier = {-2, -1, 0, 1, 2};
     final int[] zmodifier = {-1, 0, 1};
