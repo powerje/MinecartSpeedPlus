@@ -3,7 +3,10 @@ package fi.dy.esav.Minecart_speedplus;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Material;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
+import org.bukkit.block.sign.Side;
+import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Minecart;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -54,11 +57,21 @@ public class Minecart_speedplusVehicleListener implements Listener {
                     final var isSign = signs.contains(block.getType());
                     if (!isSign) { continue; }
 
-                    final Sign sign = (Sign) block.getState();
-                    final String[] text = sign.lines().stream()
-                            .filter(c -> c instanceof TextComponent)
-                            .map(t -> ((TextComponent) t).content())
-                            .toArray(String[]::new);
+                    BlockState blockState = block.getState();
+                    if (!(blockState instanceof Sign signBlock)) { continue; }
+
+                    SignSide side = signBlock.getSide(Side.FRONT);
+
+                    // Extract text content from the sign's components
+                    String[] text = new String[4];
+                    for (int i = 0; i < 4; i++) {
+                        Component line = side.line(i);
+                        if (line instanceof TextComponent textComp) {
+                            text[i] = textComp.content();
+                        } else {
+                            text[i] = "";
+                        }
+                    }
 
                     final var text0 = text[0];
                     if (!text0.equalsIgnoreCase("[msp]")) { continue; }
@@ -78,18 +91,18 @@ public class Minecart_speedplusVehicleListener implements Listener {
                     try {
                         speed = Double.parseDouble(text1);
                     } catch (Exception e) {
-                        sign.line(2, Component.text("  ERROR"));
-                        sign.line(3, Component.text("WRONG VALUE"));
-                        sign.update();
+                        side.line(2, Component.text("  ERROR"));
+                        side.line(3, Component.text("WRONG VALUE"));
+                        signBlock.update();
                         continue;
                     }
 
                     if (0 < speed && speed <= 50) {
                         cart.setMaxSpeed(0.4D * speed);
                     } else {
-                        sign.line(2, Component.text("  ERROR"));
-                        sign.line(3, Component.text("WRONG VALUE"));
-                        sign.update();
+                        side.line(2, Component.text("  ERROR"));
+                        side.line(3, Component.text("WRONG VALUE"));
+                        signBlock.update();
                     }
                 }
             }
